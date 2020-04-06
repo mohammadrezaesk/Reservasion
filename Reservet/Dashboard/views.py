@@ -14,10 +14,11 @@ def checktime(day,start,end,step,user,free):
     step = (step/10)+(free/10)
     b = (end-start)*6
     while b>0:
-        adtimes = Advice.objects.filter(status='0',classroomi__teacher__user__username=user,start__gte=h,end__lte=h+step-1)
+        adtimes = Advice.objects.filter(status__lte='1',classroomi__teacher__user__username=user,day=day,start__gte=h,end__lte=h+step-1)
         print(adtimes)
         if(len(adtimes)==0):
-            res.append([day,h,h+step-1])
+            res.append([day,h,h+step-1,start])
+            print(day,h)
         h+=step
         b-=step
     return res
@@ -104,11 +105,17 @@ def newadvices(request):
     classes = classroom.objects.filter(stpar=mainuser)
     alltime = [[]]
     typ= mainuser.typ
+    print(request.user.username)
     if typ=="teacher":
         return redirect("/dashboard/")
     else:
         args = {"type":typ,"mainuser":mainuser,"times":times, "classes":classes}  
-
+    if request.method=="POST":
+        data = json.loads(request.body)
+        clasrooom = classes.get(teacher__user__username=data['username'])
+        advc = Advice.objects.create(day=data['day'],start=data['start'],end=data['end'],classroomi=clasrooom,desc=" ",status='1',time=data['time'])
+        advc.save()
+        return HttpResponse(json.dumps({'msg':"dashboard"}),content_type='application/json')
     return render(request,"Dashboard/newadvice.html",args)
 def showtime(request):
     rusers = Ruser.objects.all()
@@ -119,7 +126,7 @@ def showtime(request):
     if request.method=='POST':
         data = json.loads(request.body)
         times = Time.objects.filter(advisor__user__username=data['name'])
-          
+        
         for i in times:
             step = i.parent_length
             if typ=="student":

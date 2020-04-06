@@ -6,25 +6,38 @@
 	font-size: 0.8rem;
 
 }
+@media only screen and (max-width: 600px) {
+  #time_list li{
+	width: 40%;
+}
+}
 #time_list li .row{
 	width: 80%;
 	text-align: center;
-	background-color: white;
+	padding: 10px 0;
 
 
 }
 .top-row{
 	border-top-right-radius: 7px;
 	border-top-left-radius: 7px;
+	background-color: #2f2f81;
+	color: white;
 }
 .bottom-row{
 	border-bottom-right-radius: 7px;
 	border-top: 1px solid #d9d9d9d9;
 	border-bottom-left-radius: 7px;
+	background-color: white;
+	color: #2f2f81;
+
+}
+.bottom-row:hover{
+	background-color:#e3e3e3;
 }
 #time_list{
 	width: 90%;
-	text-align: center;
+	text-align: left;
 	padding: 0;
 	margin: 0;
 }

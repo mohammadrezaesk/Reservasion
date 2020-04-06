@@ -36,7 +36,7 @@
                 {% for adv in Advice %}
                 <div class="row">
                     <div class="col-md-3 col-sm-3">{{adv.classroomi.stpar}}</div>
-                    <div class="col-md-3 col-sm-3">{{adv.start}}</div>
+                    <div class="col-md-3 col-sm-3">{{adv.day}} , {{adv.time}}</div>
                     <div class="col-md-4 col-sm-4">{{adv.desc}}</div>
                     <div class="col-md-1 col-sm-1">{{adv.status}}</div>
                     <div class="col-md-1 col-sm-1"><button class="btn btn-warning">Edit</button></div>
@@ -51,7 +51,7 @@
                 {% for adv in Advice %}
                 <div class="row">
                     <div class="col-md-3 col-sm-3">{{adv.classroomi.teacher}}</div>
-                    <div class="col-md-3 col-sm-3">{{adv.start}}</div>
+                    <div class="col-md-3 col-sm-3">{{adv.day}} , {{adv.time}}</div>
                     <div class="col-md-6 col-sm-6">{{adv.desc}}</div>
                 </div>
                 {% endfor %}

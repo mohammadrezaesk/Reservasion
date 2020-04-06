@@ -19,6 +19,7 @@ class Advice (models.Model):
     desc = models.CharField(default=" ",max_length=1000)
     status = models.CharField(default="0",max_length=10)
     day = models.CharField(default=" ",max_length=100)
+    time = models.CharField(default=" ",max_length=100)
     start = models.IntegerField(default=0)
     end = models.IntegerField(default=0)
     def __str__(self):
