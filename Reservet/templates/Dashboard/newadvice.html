@@ -1,0 +1,101 @@
+{% extends 'dashboardbase.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/Dashboard/newadvice.css'%}">
+{% endblock %}
+{% block body %}
+        {% csrf_token %}
+        <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Set a Advice </h1>
+                        <ol class="breadcrumb text-right">
+                            <li class="active">
+                                <select class="form-control active" id="teacher_selector">
+                                    <option>Select once</option>
+                                    {% for i in classes %}
+                                        <option value="{{i.teacher.user.username}}">{{i.teacher.user.first_name}} {{i.teacher.user.last_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content mt-3">
+            <div class="container">
+                <ul id="time_list">
+
+                </ul>	
+			</div>
+		</div>
+        
+        <script src="{% static 'vendors/jquery/dist/jquery.min.js'%}"></script>
+        <script type="text/javascript">
+            function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    $(document).ready(function () {
+    $(document).on("change",'#teacher_selector', function() {
+        var csrftoken = getCookie('csrftoken');
+        var request = new Request(
+    "/dashboard/newadvice/showtime/",
+    {headers: {'X-CSRFToken': csrftoken}}
+);
+fetch(request, {
+    method: 'POST',
+    mode: 'same-origin',
+    body:JSON.stringify({ 'name':$('#teacher_selector').val()}),  // Do not send CSRF token to another domain.
+}).then((response) => {
+    return response.json();
+  })
+  .then((data) => {
+    a = data.msg
+    console.log(a)
+    document.getElementById("time_list").innerHTML = " ";
+    for (var i = 0; i < a.length; i++) {
+        console.log(i)
+        for (var j = 0; j < a[i].length; j++) {
+
+            document.getElementById("time_list").innerHTML+='<li><div class="row top-row"><div class="col-12">'+a[i][j][0]+'</div></div><div class="row bottom-row"><div class="col-12">'+a[i][j][1]+'-'+a[i][j][2]+'</div></div></li>'
+        }
+    }
+  });
+        // $.ajax({
+        //     type: "POST",
+        //     url: "/dashboard/newadvice/showtime/",
+        //     data:{ 'name':$('#teacher_selector').val()},
+        //     success: function (data) {
+        //     if (data.is_taken) {
+        //         alert(data.msg);
+        //     }
+        // }
+        // });
+    });
+    });
+
+</script>
+{% endblock %}
+

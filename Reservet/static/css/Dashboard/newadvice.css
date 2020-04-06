@@ -1,0 +1,30 @@
+#time_list li{
+	display: inline-block;
+	margin: 5px 0;
+	width: 25%;
+	padding: 4px;
+	font-size: 0.8rem;
+
+}
+#time_list li .row{
+	width: 80%;
+	text-align: center;
+	background-color: white;
+
+
+}
+.top-row{
+	border-top-right-radius: 7px;
+	border-top-left-radius: 7px;
+}
+.bottom-row{
+	border-bottom-right-radius: 7px;
+	border-top: 1px solid #d9d9d9d9;
+	border-bottom-left-radius: 7px;
+}
+#time_list{
+	width: 90%;
+	text-align: center;
+	padding: 0;
+	margin: 0;
+}
