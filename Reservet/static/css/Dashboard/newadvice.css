@@ -21,8 +21,12 @@
 .top-row{
 	border-top-right-radius: 7px;
 	border-top-left-radius: 7px;
-	background-color: #2f2f81;
+	background-color: #1d5a9b;
 	color: white;
+}
+.container{
+	padding: 0;
+	padding-left: 10px;
 }
 .bottom-row{
 	border-bottom-right-radius: 7px;

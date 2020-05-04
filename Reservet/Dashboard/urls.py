@@ -6,5 +6,5 @@ urlpatterns = [
     path('newadvice/',views.newadvices,name="dashboard_show_new"),
     path('newadvice/showtime/',views.showtime,name="dashboard_show_time"),
     path('times/',views.times,name="dashboard_show_times"),
-    path('timeline/',views.timeline,name="dashboard_show_timeline"),
+    path('rooms/',views.rooms,name="dashboard_show_rooms"),
 ]

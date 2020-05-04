@@ -5,8 +5,62 @@
 
 }
 .form-control{
-	border: none!important;
 	text-align: center!important;
 	width: 100% !important;
+	font-size: 0.9rem;
+	padding: 0;
+	margin: auto;
+	border:2px solid #1d5a9b;
+}
+.container{
+	padding: 0;
+}
+.search-bar button {
+	margin: auto;
+	width: 100%;
+
+
+
+}
+.search-bar p{
+	position: absolute;
+	top: 50%;
+	right: 50%;
+	width: 100%;
+	transform: translate(50%,-50%);
+}
+.search-bar{
+	background-color: white;
+	width: 100%;
+	padding: 5px;
+	text-align: center;
+	margin: 0;
+}
+.search-bar div{
+	padding: 0 2px;
+	font-size: 0.8rem;
+
+}
+.list .row{
+	background: white;
+	border-radius: 4px !important;
+	padding: 5px 0;
+	font-size: 0.9rem;
 	margin: 5px 0;
+	text-align: center;
+	color: #878787;
+}
+.list .row div{
+	margin: auto;
+}
+@media only screen and (max-width: 500px) {
+  .list .row{
+  	font-size: 0.7rem;
+  }
+}
+
+.list .title-row{
+	background: #1d5a9b;
+	padding: 10px 0;
+	color: white;
 }

@@ -1,0 +1,50 @@
+.list .row{
+	background: white;
+	border-radius: 6px !important;
+	padding: 10px 5px;
+	margin: 5px 0;
+	text-align: center;
+}
+
+.list .title-row{
+	background: #1d5a9b;
+	color: white;
+		font-size: 0.9rem !important;
+
+}
+.list .row div{
+	position: relative;
+	text-align: center;
+	
+}
+.container{
+	padding: 0;
+
+}
+
+.datas{
+	text-align: center;
+	margin: auto;
+	font-size: 0.9rem !important;
+}
+.datas2{
+	text-align: center;
+	margin: auto;
+	display: inline-block;
+	width: 50%;
+	border-radius: 0!important;
+	font-size: 0.8rem;
+}
+
+@media only screen and (max-width: 500px) {
+  .list .row{
+  	font-size: 0.7rem;
+  }
+    .datas , .datas2{
+  	font-size: 0.7rem;
+  }
+  .datas2{
+  	display: block;
+  	width: 100%;
+  }
+}

@@ -7,44 +7,37 @@
 
         <form method="POST" action="/dashboard/times/">
         {% csrf_token %}
-        <div class="breadcrumbs">
-            <div class="col-sm-4">
-                <div class="page-header float-left">
-                    <div class="page-title">
-                        <h1>Time Setting </h1>
-
-                    </div>
-                </div>
+        <div class="row search-bar">
+            <div class="col-4">
+                <p>Time Setting</p>
             </div>
-            <div class="col-sm-8">
-                <div class="page-header float-right">
-                    <div class="page-title">
-                        <ol class="breadcrumb text-right">
-                            <li class="active"><button type="submit" class="btn btn-primary">Save</button></li>
-                        </ol>
-                    </div>
-                </div>
+            <div class="col-6">
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-primary" style="background-color: #e74c3c; border-radius: 5px;border:none;">Save</button>
             </div>
         </div>
+        
         <div class="content mt-3">
             <div class="container">
-            	<div class="row">
-            		<div class="col-3">DAY</div>
-            		<div class="col-3">START</div>
-            		<div class="col-2">END</div>
-            		<div class="col-2">Parent</div>
-            		<div class="col-2">Student</div>
+                <div class="list">
+                	<div class="row title-row">
+                		<div class="col-4">DAY</div>
+                		<div class="col-2">START</div>
+                		<div class="col-2">END</div>
+                		<div class="col-2">Parent</div>
+                		<div class="col-2">Student</div>
+                	</div>
+                	{% for i in times %}
+                	<div class="row">
+                		<div class="col-4">{{i.day}}</div>
+                		<div class="col-2"><input class="form-control" value="{{i.start}}" type="number" name="{{i.day}}_start"></div>
+                		<div class="col-2"><input class="form-control" value="{{i.end}}" type="number" name="{{i.day}}_end"></div>
+                		<div class="col-2"><input class="form-control" value="{{i.parent_length}}" type="number" name="{{i.day}}_parent"></div>
+                		<div class="col-2"><input class="form-control" value="{{i.student_length}}" type="number" name="{{i.day}}_student"></div>
+                	</div>
+                	{% endfor %}
             	</div>
-            	{% for i in times %}
-            	<div class="row">
-            		<div class="col-3">{{i.day}}</div>
-            		<div class="col-3"><input class="form-control" value="{{i.start}}" type="number" name="{{i.day}}_start"></div>
-            		<div class="col-2"><input class="form-control" value="{{i.end}}" type="number" name="{{i.day}}_end"></div>
-            		<div class="col-2"><input class="form-control" value="{{i.parent_length}}" type="number" name="{{i.day}}_parent"></div>
-            		<div class="col-2"><input class="form-control" value="{{i.student_length}}" type="number" name="{{i.day}}_student"></div>
-            	</div>
-            	{% endfor %}
-            	
 			</div>
 		</div>
 		</form>

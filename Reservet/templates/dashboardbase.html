@@ -17,7 +17,7 @@
 
     <link rel="apple-touch-icon" href="apple-icon.png">
     <link rel="shortcut icon" href="favicon.ico">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css'%}">
     <link rel="stylesheet" href="{% static 'vendors/bootstrap/dist/css/bootstrap.min.css'%}">
     <link rel="stylesheet" href="{% static 'vendors/font-awesome/css/font-awesome.min.css'%}">
     <link rel="stylesheet" href="{% static 'vendors/themify-icons/css/themify-icons.css'%}">
@@ -55,27 +55,43 @@
                         <a href="/dashboard"> <i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <h3 class="menu-title">Informations</h3><!-- /.menu-title -->
-                    {% if mainuser.typ == "teacher" %}
+                    {% if type == "teacher" %}
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Advices</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="fa fa-puzzle-piece"></i><a href="/dashboard/advices/">Total</a></li>
-                                <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Parents</a></li>
-                                <li><i class="fa fa-id-badge"></i><a href="ui-badges.html">Students</a></li>
+                                <li><i class="fa fa-puzzle-piece"></i><a href="ui-buttons.html">Requests</a></li>
                             </ul>
+                        </li>
+                        <li>
                             <a href="/dashboard/times/"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>My Times</a>
+                        </li>
+                        <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Rooms</a>
+                            <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-table"></i><a href="/dashboard/rooms/">Total</a></li>
+                            </ul>
+                        </li>
+                        <li>
                             <a href="#"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Settings</a>
-
                         </li>        
                     {% else %}
                         <li class="menu-item-has-children dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Advices</a>
                             <ul class="sub-menu children dropdown-menu">
                                 <li><i class="fa fa-puzzle-piece"></i><a href="/dashboard/advices/">Total</a></li>
+                                <li><i class="fa fa-puzzle-piece"></i><a href="/dashboard/newadvice/">Set New</a></li>
                             </ul>
-                            <a href="/dashboard/newadvice"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>New Advice</a>
+                        </li>
+                            <li class="menu-item-has-children dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Rooms</a>
+                            <ul class="sub-menu children dropdown-menu">
+                            <li><i class="fa fa-table"></i><a href="/dashboard/rooms/">Total</a></li>
+                            </ul>
+                            </li>
+                            <li>
                             <a href="#"  aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-laptop"></i>Settings</a>
-                        </li>                
+                        </li>
                     {% endif %}
                     
                     

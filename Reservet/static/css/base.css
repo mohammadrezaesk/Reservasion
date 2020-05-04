@@ -1,0 +1,10 @@
+@font-face{
+	font-family: proxima;
+	src:url('../fonts/Mark Simonson - Proxima Nova Alt Extrabold.otf');
+}
+*{
+	font-family: proxima;
+}
+.list{
+
+}

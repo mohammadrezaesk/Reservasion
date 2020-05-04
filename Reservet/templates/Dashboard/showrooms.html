@@ -1,0 +1,157 @@
+{% extends 'dashboardbase.html' %}
+{% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/Dashboard/showroom.css'%}">
+<script src="{% static 'vendors/jquery/dist/jquery.min.js'%}"></script>
+{% endblock %}
+{% block body %}
+
+    <!-- Right Panel -->
+
+        <!-- <div class="breadcrumbs">
+            <div class="col-sm-4">
+                <div class="page-header float-left">
+                    <div class="page-title">
+                        <h1>Total Room </h1>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="page-header float-right">
+                    <div class="page-title">
+                        <ol class="breadcrumb text-right">
+                            <li class="active"><button class="btn btn-primary" style="background-color: #e74c3c; border-radius: 5px;border:none;">New</button></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        {% if type != "teacher" %}
+        <form method="POST" action="/dashboard/rooms/">
+            {% csrf_token %}
+            <div class="row search-bar">
+                <div class="col-2">
+                    <p>Time Setting</p>
+                </div>
+                <div class="col-4">
+                    <input type="text" id="usrname" name="username" class="form-control" placeholder="Enter the username">
+                </div>
+                <div class="col-4">
+                    <input type="text" id="code" name="code" class="form-control" placeholder="Enter the code">
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-primary" type="submit" style="background-color: #e74c3c; border-radius: 5px;border:none;">Request</button>
+                </div>
+            </div>
+        </form>
+        {% endif %}
+        <div class="content mt-3">
+            <div class="container">
+                <div class="list">
+                
+                    {% if type == "teacher" %}
+                    <div class="row title-row">
+                        <div class="col-3">User</div>
+                        <div class="col-3">Total</div>
+                        <div class="col-3">Score</div>
+                        <div class="col-3">Status</div>
+                    </div>
+                    {% for room in rooms %}
+                    <div class="row">
+                        <div class="col-3"><p class="datas datas3">{{ room.1.stpar.user.first_name }} {{ room.1.stpar.user.last_name }}</p></div>
+                        <div class="col-3"><p class="datas datas3">{{ room.0|length }}</p></div>
+                        <div class="col-3"><p class="datas datas3">10</p></div>
+                        {% if room.1.status == 1 %}
+                        <div class="col-3"><p class="datas2" style="background-color:#1a8644;color: white;border-radius: 5px;"id="acc-{{room.1.pk}}">Accept</p><p class="datas2" style="background-color:#e74c3c;color: white;border-radius: 5px;" id="dec-{{room.1.pk}}">Declines</p></div>
+                        {% elif room.1.status == 2 %}
+                        <div class="col-3"><p class="datas" style="background-color:#fbb853;color: white;border-radius: 5px;">Active</p></div>
+                        {% elif room.1.status == 0 %}
+                        <div class="col-3"><p class="datas" style="background-color:#c4c4c4;color: white;border-radius: 5px;">Declined</p></div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="row title-row">
+                        <div class="col-3">USER</div>
+                        <div class="col-3">Total</div>
+                        <div class="col-3">Score</div>
+                        <div class="col-3">Status</div>
+                    </div>
+                    {% for room in rooms %}
+                    <div class="row">
+                        <div class="col-3"><p class="datas datas3">{{ room.1.teacher.user.first_name }} {{ room.1.teacher.user.last_name }}</p></div>
+                        <div class="col-3"><p class="datas datas3">{{ room.0|length }}</p></div>
+                        <div class="col-3"><p class="datas datas3">8</p></div>
+                        {% if room.1.status == 1 %}
+                        <div class="col-3"><p class="datas" style="background-color:#fbb853;color: white;border-radius: 5px;">Request Sent</p></div>
+                        {% elif room.1.status == 2 %}
+                        <div class="col-3"><p class="datas" style="background-color:#1a8644;color: white;border-radius: 5px;">Active</p></div>
+                        {% elif room.1.status == 0 %}
+                        <div class="col-3"><p class="datas" style="background-color:#c4c4c4;color: white;border-radius: 5px;">Declined</p></div>
+                        {% endif %}
+
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+            </div>
+        </div>
+            
+
+
+        </div> <!-- .content -->
+    <!-- Right Panel -->
+<script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    $(document).ready(function(){
+        
+      $("p").click(function(event){
+        var bod = {}
+        var ids = event.target.id
+        if (ids.indexOf('acc')!=-1){
+            ids = parseInt(ids.substring(4))
+            bod = {'msg':'acc','pk':ids};
+        }
+        else if (ids.indexOf('dec')!=-1){
+            ids = parseInt(ids.substring(4))
+            bod = {'msg':'dec','pk':ids};
+        }
+        var csrftoken = getCookie('csrftoken');
+            var request = new Request(
+                "/dashboard/rooms/", {
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    }
+                }
+            );
+            fetch(request, {
+                    method: 'POST',
+                    mode: 'same-origin',
+                    body: JSON.stringify(bod), // Do not send CSRF token to another domain.
+                }).then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.msg=='done') {
+                        location.reload();
+                    }
+                });
+      });
+      
+    });
+</script>
+{% endblock %}

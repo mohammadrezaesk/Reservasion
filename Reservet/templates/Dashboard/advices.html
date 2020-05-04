@@ -1,5 +1,10 @@
 {% extends 'dashboardbase.html' %}
 {% load static %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/Dashboard/advices.css'%}">
+<script src="{% static 'vendors/jquery/dist/jquery.min.js'%}"></script>
+
+{% endblock %}
 {% block body %}
 
     <!-- Right Panel -->
@@ -25,37 +30,56 @@
 
         <div class="content mt-3">
             <div class="container">
-                {% if mainuser.typ == "teacher" %}
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">USER</div>
-                    <div class="col-md-3 col-sm-3">TIME</div>
-                    <div class="col-md-4 col-sm-4">INFO</div>
-                    <div class="col-md-1 col-sm-1">STATUS</div>
-                    <div class="col-md-1 col-sm-1">OPERATE</div>
+                <div class="list">
+                    {% if mainuser.typ == "teacher" %}
+                    <div class="row title-row">
+                        <div class="col-md-3 col-3">USER</div>
+                        <div class="col-md-3 col-3
+                        ">TIME</div>
+                        <div class="col-md-3 col-3">INFO</div>
+                        <div class="col-md-3 col-3">STATUS</div>
+                    </div>
+                    {% for adv in Advice %}
+                    <div class="row">
+                        <div class="col-md-3 col-3"><p class="datas">{{adv.classroomi.stpar}}</p></div>
+                        <div class="col-md-3 col-3"><p class="datas">{{adv.day}} , {{adv.time}}</p></div>
+                        <div class="col-md-3 col-3"><p class="datas">{{adv.desc}}</p></div>
+                        {% if adv.status == 1 %}
+                        <div class="col-md-3 col-3"><p class="datas2" style="background-color:#1a8644;color: white;border-radius: 5px;"id="acc-{{adv.pk}}">Accept</p><p class="datas2" style="background-color:#e74c3c;color: white;border-radius: 5px;" id="dec-{{adv.pk}}">Declines</p></div>
+                        {% elif adv.status == 2 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#c4c4c4;color: white;border-radius: 5px;">Done</p></div>
+                        {% elif adv.status == 0 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#fbb853;color: white;border-radius: 5px;">Active</p></div>
+                        {% elif adv.status == 3 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#c4c4c4;color: white;border-radius: 5px;">Declined</p></div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="row title-row">
+                        <div class="col-md-3 col-3">USER</div>
+                        <div class="col-md-3 col-3">TIME</div>
+                        <div class="col-md-3 col-3">INFO</div>
+                        <div class="col-md-3 col-3">STATUS</div>
+                    </div>
+                    {% for adv in Advice %}
+                    <div class="row">
+                        <div class="col-md-3 col-3"><p class="datas">{{adv.classroomi.teacher}}</p></div>
+                        <div class="col-md-3 col-3"><p class="datas">{{adv.day}} , {{adv.time}}</p></div>
+                        <div class="col-md-3 col-3"><p class="datas">{{adv.desc}}</p></div>
+                        {% if adv.status == 1 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#e74c3c;color: white;border-radius: 5px;">Request sent</p></div>
+                        {% elif adv.status == 2 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#c4c4c4;color: white;border-radius: 5px;">Done</p></div>
+                        {% elif adv.status == 0 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#fbb853;color: white;border-radius: 5px;">Active</p></div>
+                        {% elif adv.status == 3 %}
+                        <div class="col-md-3 col-3"><p class="datas" style="background-color:#c4c4c4;color: white;border-radius: 5px;">Declined</p></div>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    {% endif %}
                 </div>
-                {% for adv in Advice %}
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">{{adv.classroomi.stpar}}</div>
-                    <div class="col-md-3 col-sm-3">{{adv.day}} , {{adv.time}}</div>
-                    <div class="col-md-4 col-sm-4">{{adv.desc}}</div>
-                    <div class="col-md-1 col-sm-1">{{adv.status}}</div>
-                    <div class="col-md-1 col-sm-1"><button class="btn btn-warning">Edit</button></div>
-                </div>
-                {% endfor %}
-                {% else %}
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">USER</div>
-                    <div class="col-md-3 col-sm-3">TIME</div>
-                    <div class="col-md-6 col-sm-6">INFO</div>
-                </div>
-                {% for adv in Advice %}
-                <div class="row">
-                    <div class="col-md-3 col-sm-3">{{adv.classroomi.teacher}}</div>
-                    <div class="col-md-3 col-sm-3">{{adv.day}} , {{adv.time}}</div>
-                    <div class="col-md-6 col-sm-6">{{adv.desc}}</div>
-                </div>
-                {% endfor %}
-                {% endif %}
             </div>
             
 
@@ -63,4 +87,57 @@
         </div> <!-- .content -->
     <!-- Right Panel -->
 
+        <script type="text/javascript">
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    $(document).ready(function(){
+        
+      $("p").click(function(event){
+        var bod = {}
+        var ids = event.target.id
+        if (ids.indexOf('acc')!=-1){
+            ids = parseInt(ids.substring(4))
+            bod = {'msg':'acc','pk':ids};
+        }
+        else if (ids.indexOf('dec')!=-1){
+            ids = parseInt(ids.substring(4))
+            bod = {'msg':'dec','pk':ids};
+        }
+        var csrftoken = getCookie('csrftoken');
+            var request = new Request(
+                "/dashboard/advices/", {
+                    headers: {
+                        'X-CSRFToken': csrftoken
+                    }
+                }
+            );
+            fetch(request, {
+                    method: 'POST',
+                    mode: 'same-origin',
+                    body: JSON.stringify(bod), // Do not send CSRF token to another domain.
+                }).then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    if (data.msg=='done') {
+                        location.reload();
+                    }
+                });
+      });
+      
+    });
+</script>
 {% endblock %}
